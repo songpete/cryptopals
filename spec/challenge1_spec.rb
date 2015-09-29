@@ -18,5 +18,6 @@ end
 describe 'string_to_hex' do
   it 'should convert an ascii string to hexstring' do
     expect(string_to_hex("daf")).to eq("646166")
+    expect(string_to_hex("qwerty")).to eq("717765727479")
   end
 end

@@ -1,5 +1,10 @@
+# Different ways of scoring text to search for actual messages.
 
-# Higher score means text is more likely to be English. Based on letter frequency, space ratio and vowels
+# frequency of letters in the English language. From wikipedia: https://en.wikipedia.org/wiki/Letter_frequency
+CHAR_FREQ = [8.17, 1.49, 2.78, 4.25, 12.70, 2.23, 2.02, 6.09, 6.97, 0.15, 0.77, 4.03, 2.41, 6.75, 7.51, 1.93, 0.09, 5.99, 6.33, 9.06, 2.76, 0.98, 2.36, 0.15, 1.97, 0.07]
+ALL_LETTERS = ('a'..'z').to_a
+
+# Higher score is better. Based on letter frequency, space ratio and vowels
 def score_text(txt)
   txt_length = txt.length.to_f
   total_score = 0
@@ -21,6 +26,23 @@ def score_text(txt)
 
   # capital_ratio = txt.scan(/[ABCDEFGHIOUT]/).count / txt_length
   # total_score += 4 if capital_ratio > 0 && capital_ratio < 0.2
+
+  return total_score
+end
+
+# Lower is better. Works better with longer messages and for challenge 4
+def score_text_two(text)
+  txt = text.downcase
+  txt_length = txt.length.to_f
+  total_score = 0
+
+  ALL_LETTERS.each_with_index do |l, i|
+    l_freq = (txt.count(l) / txt_length) * 100
+    total_score += (l_freq - CHAR_FREQ[i]).abs
+  end
+
+  space_ratio = txt.scan(/.\s./).count / txt_length
+  total_score += ((space_ratio * 100) - 14.0).abs
 
   return total_score
 end
