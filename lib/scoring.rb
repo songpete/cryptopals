@@ -30,7 +30,7 @@ def score_text(txt)
   return total_score
 end
 
-# Lower is better. Works better with longer messages and for challenge 4
+# Lower is better. Works better with longer messages.
 def score_text_two(text)
   txt = text.downcase
   txt_length = txt.length.to_f
