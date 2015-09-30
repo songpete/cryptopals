@@ -33,3 +33,11 @@ def hexstring_to_bytes(hex); [hex].pack('H*').bytes; end # returns an array of b
 def bytes_to_string(bytes); bytes.pack('c*'); end
 def string_to_hex(str); bytes_to_hex(str.bytes); end
 
+# key of any length that is xor'd with a message of any length
+def repeat_key_xor(message, key)
+  message_key_ratio = (message.length / key.length) + 1
+  key_bytes = (key * message_key_ratio).bytes
+  output = message.bytes.map { |mb| mb ^ key_bytes.shift }
+
+  return string_to_hex(bytes_to_string(output))
+end

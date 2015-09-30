@@ -44,5 +44,3 @@ end
 puts "Max scoring letter is: #{max_letter}"
 puts "Result: #{max_string}"
 puts "Score: #{max_score}"
-
-puts string_to_hex("qwerty");
