@@ -40,7 +40,7 @@ def repeat_key_xor(message, key)
   key_bytes = (key * message_key_ratio).bytes
   output = message.bytes.map { |mb| mb ^ key_bytes.shift }
 
-  return string_to_hex(bytes_to_string(output))
+  return bytes_to_string(output)
 end
 
 # Hamming distance is the number of differing bits. XOR results in a 1 when the bits differ.

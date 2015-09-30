@@ -19,4 +19,4 @@ p "Possible key is: #{key_guess}"
 
 # xor the cipher against the repeating key and convert from hex to text
 puts "Decrypted string based on key: "; puts ""
-puts hex_to_text(repeat_key_xor(decoded_string, key_guess))
+puts repeat_key_xor(decoded_string, key_guess)
