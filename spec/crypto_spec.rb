@@ -34,3 +34,18 @@ describe 'nest into columns function' do
     expect(nest_into_columns(array1, 3)).to eq(target1)
   end
 end
+
+describe 'pkcs7 padding' do
+  it 'should add proper padding' do
+    str = "YELLOW SUBMARINE"
+
+    expect(pkcs7_pad(str, 20)).to eq("YELLOW SUBMARINE\x04\x04\x04\x04")
+    expect(pkcs7_pad(str, 23)).to eq("YELLOW SUBMARINE\x07\x07\x07\x07\x07\x07\x07")
+  end
+
+  it 'should not alter a string that is the same width as specified length' do
+    str = "YELLOW SUBMARINE AND DOLPHINS"
+
+    expect(pkcs7_pad(str, 29)).to eq(str)
+  end
+end

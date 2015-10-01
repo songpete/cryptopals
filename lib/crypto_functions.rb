@@ -130,3 +130,15 @@ def find_key(str, len)
 
   skey
 end
+
+def pkcs7_pad(str, block_size)
+  remainder = str.length % block_size
+  return str if remainder == 0
+
+  add_bytes = block_size - remainder                 # number of bytes needed to add
+  pad_char = add_bytes.chr
+  result = str.dup
+  add_bytes.times { result << pad_char }
+
+  return result
+end
