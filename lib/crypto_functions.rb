@@ -1,3 +1,4 @@
+require 'base64'
 require_relative 'scoring.rb'
 
 def assert_equal(first, second); puts (first == second) ? "Pass" : "Fail"; end

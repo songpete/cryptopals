@@ -1,6 +1,5 @@
 
 require_relative '../lib/crypto_functions'
-require_relative '../lib/scoring'
 
 
 # file 4.txt is from: http://cryptopals.com/static/challenge-data/4.txt

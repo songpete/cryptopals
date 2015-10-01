@@ -1,6 +1,5 @@
 
 require_relative '../lib/crypto_functions'
-require 'base64'
 
 # break repeating key XOR (Vigenere)
 
