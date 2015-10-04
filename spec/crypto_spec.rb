@@ -1,5 +1,5 @@
 
-require_relative '../lib/crypto_functions.rb'
+require_relative '../lib/encryption.rb'
 
 describe 'byte hamming distance' do
   it 'should give the correct number of differing bits between two bytes' do
@@ -44,8 +44,27 @@ describe 'pkcs7 padding' do
   end
 
   it 'should not alter a string that is the same width as specified length' do
-    str = "YELLOW SUBMARINE AND DOLPHINS"
+    expect(pkcs7_pad("YELLOW SUBMARINE AND DOLPHINS", 29)).to eq("YELLOW SUBMARINE AND DOLPHINS")
+  end
+end
 
-    expect(pkcs7_pad(str, 29)).to eq(str)
+describe 'ecb encryption and decryption' do
+  str = "This is a secret message. Keep it safe from prying eyes and all that."
+  key = "YELLOW SUBMARINE"
+
+  it 'should encrypt and decrypt to original message with same key' do
+    cipher = encrypt_ecb(str, key)
+    expect(decrypt_ecb(cipher, key)).to eq(str)
+  end
+end
+
+describe 'cbc encryption and decryption' do 
+  str = "This is a secret message. Keep it safe from prying eyes and all that."
+  key = "YELLOW SUBMARINE"
+  iv = "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+
+  it 'should encrypt and decrypt to original message with same key' do
+    cipher = encrypt_cbc(str, key, iv)
+    expect(decrypt_cbc(cipher, key, iv)).to eq(str)
   end
 end

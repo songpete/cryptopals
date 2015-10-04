@@ -34,6 +34,7 @@ def hexstring_to_bytes(hex); [hex].pack('H*').bytes; end # returns an array of b
 
 def bytes_to_string(bytes); bytes.pack('c*'); end
 def string_to_hex(str); bytes_to_hex(str.bytes); end
+def string_to_bytes(str); str.bytes; end
 
 # key of any length that is xor'd with a message of any length
 def repeat_key_xor(message, key)
@@ -141,4 +142,10 @@ def pkcs7_pad(str, block_size)
   add_bytes.times { result << pad_char }
 
   return result
+end
+
+def remove_pkcs7_padding(str)
+  last = str.bytes.last
+  if last.is_a?(Integer); last.times { str.chop! }; end
+  return str
 end
