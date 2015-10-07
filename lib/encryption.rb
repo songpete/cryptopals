@@ -1,4 +1,5 @@
 require 'openssl'
+require 'securerandom'
 require_relative 'crypto_functions'
 
 def encrypt_ecb(str, key)
@@ -62,4 +63,22 @@ def decrypt_cbc(cipher, key, iv)
     last_cipherblock = block
   end
   return remove_pkcs7_padding(plaintext)
+end
+
+# Pads front and end of message with 5-10 rand bytes befor encrypting in either ecb or cbc
+def encryption_oracle(message)
+  rand_key = SecureRandom.random_bytes(16)
+  rand_iv = SecureRandom.random_bytes(16)
+  front_bytes = SecureRandom.random_bytes(rand(5..10))
+  end_bytes = SecureRandom.random_bytes(rand(5..10))
+
+  padded_message = front_bytes + message + end_bytes
+
+  (rand(1..2) == 1) ? encrypt_ecb(message, rand_key) : encrypt_cbc(message, rand_key, rand_iv)
+end
+
+# Point to a function to detect if it's encrypting in ecb or aes
+def detect_ecb_or_cbc(black_box)
+  plain = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+  ecb_encrypted?(black_box.call(plain)) ? "ecb" : "cbc"
 end
