@@ -149,3 +149,5 @@ def remove_pkcs7_padding(str)
   if last.is_a?(Integer); last.times { str.chop! }; end
   return str
 end
+
+def generate_random_string(len); rand(36**len).to_s(36); end
